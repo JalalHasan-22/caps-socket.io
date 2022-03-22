@@ -5,7 +5,6 @@ const port = process.env.PORT;
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const Client = require("socket.io-client");
-const hub = require("../caps");
 
 describe("testing the socket connection", () => {
   let io, serverSocket, clientSocket, consoleSpy;
@@ -29,14 +28,14 @@ describe("testing the socket connection", () => {
     consoleSpy.mockRestore();
   });
 
-  it("testing the connection", async () => {
+  it("testing the connection", () => {
     clientSocket.on("connection", async (soket) => {
       await consoleSpy();
       expect(consoleSpy).toHaveBeenCalled();
     });
   });
 
-  it("testing the pickup", async () => {
+  it("testing the pickup", () => {
     clientSocket.on("connection", async (soket) => {
       socket.emit("pickup", (payload) => {
         pickup(payload);
@@ -48,7 +47,7 @@ describe("testing the socket connection", () => {
     });
   });
 
-  it("testing in transit", async () => {
+  it("testing in transit", () => {
     serverSocket.on("in-transit", async (payload) => {
       inTransit(payload);
       await consoleSpy();
